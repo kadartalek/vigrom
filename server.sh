@@ -35,8 +35,8 @@ sudo -iu postgres psql <<<"GRANT ALL PRIVILEGES ON DATABASE \"yii2\" TO \"yii2_u
 sudo -iu postgres psql <<<"CREATE USER \"yii2_user_test\" WITH ENCRYPTED PASSWORD '$password'"
 sudo -iu postgres psql <<<"GRANT ALL PRIVILEGES ON DATABASE \"yii2_test\" TO \"yii2_user\""
 
-sudo -iu postgres psql -d yii2 -a -f UUID_v7_for_Postgres.sql
-sudo -iu postgres psql -d yii2_test -a -f UUID_v7_for_Postgres.sql
+sudo -iu postgres psql -d yii2 -a -f /app/UUID_v7_for_Postgres.sql
+sudo -iu postgres psql -d yii2_test -a -f /app/UUID_v7_for_Postgres.sql
 
 cd /
 mkdir app
