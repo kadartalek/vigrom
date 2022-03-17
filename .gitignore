@@ -29,5 +29,12 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 
+/env.php
+
+/runtime
+/runtime/
+/www/assets
+/www/assets/
+
 #vagrant folder
 /.vagrant

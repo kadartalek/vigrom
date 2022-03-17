@@ -2,7 +2,7 @@
 
 #== Import script args ==
 
-github_token=$(echo "$1")
+github_token=$1
 
 #== Bash helpers ==
 
@@ -14,14 +14,14 @@ function info {
 
 #== Provision script ==
 
-info "Provision-script user: `whoami`"
+info "Provision-script user: $(whoami)"
 
 info "Configure composer"
-composer config --global github-oauth.github.com ${github_token}
+composer config --global github-oauth.github.com "${github_token}"
 echo "Done!"
 
 info "Install project dependencies"
-cd /app
+cd /app || exit
 composer --no-progress --prefer-dist install
 
 info "Create bash-alias 'app' for vagrant user"

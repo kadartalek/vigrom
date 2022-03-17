@@ -39,10 +39,10 @@ if options['github_token'].nil? || options['github_token'].to_s.length != 40
   exit
 end
 
-# vagrant configurate
+# vagrant configure
 Vagrant.configure(2) do |config|
   # select the box
-  config.vm.box = 'bento/ubuntu-18.04'
+  config.vm.box = 'bento/ubuntu-20.04'
 
   # should we ask about box updates?
   config.vm.box_check_update = options['box_check_update']

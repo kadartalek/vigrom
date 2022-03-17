@@ -25,16 +25,16 @@ BEGIN {
         isFile["same"] = FILENAME
         # Define array index for the file
         switch (FILENAME){
-        case /config\/web\.php$/:
-            isFile["IsConfWeb"] = 1
-            msg = msg " - add allowed IP: " ip
-            break
+            case /config\/Web\.php$/:
+                isFile["IsConfWeb"] = 1
+                msg = msg " - add allowed IP: " ip
+                break
         }
         # Print the concatenated message for the file
         print msg
     }
 
-    # IF config/web.php
+    # IF config/www.php
     if (isFile["IsConfWeb"]){
         # IF line has "allowedIPs" and doesn't has our IP
         if (match($0, "allowedIPs") && !match($0, ip)){

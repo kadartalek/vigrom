@@ -2,7 +2,7 @@
 
 #== Import script args ==
 
-timezone=$(echo "$1")
+timezone="$1"
 readonly IP=$2
 
 #== Bash helpers ==
@@ -15,15 +15,15 @@ function info {
 
 #== Provision script ==
 
-info "Provision-script user: `whoami`"
+info "Provision-script user: $(whoami)"
 
 export DEBIAN_FRONTEND=noninteractive
 
 info "Configure timezone"
-timedatectl set-timezone ${timezone} --no-ask-password
+timedatectl set-timezone "${timezone}" --no-ask-password
 
 info "Add the VM IP to the list of allowed IPs"
-awk -v ip=$IP -f /app/vagrant/provision/provision.awk /app/config/web.php
+awk -v ip="$IP" -f /app/vagrant/provision/provision.awk /app/config/Web.php
 
 info "Prepare root password for MySQL"
 debconf-set-selections <<< 'mariadb-server mysql-server/root_password password'
@@ -46,10 +46,10 @@ mysql <<< 'FLUSH PRIVILEGES'
 echo "Done!"
 
 info "Configure PHP-FPM"
-sed -i 's/user = www-data/user = vagrant/g' /etc/php/7.2/fpm/pool.d/www.conf
-sed -i 's/group = www-data/group = vagrant/g' /etc/php/7.2/fpm/pool.d/www.conf
-sed -i 's/owner = www-data/owner = vagrant/g' /etc/php/7.2/fpm/pool.d/www.conf
-cat << EOF > /etc/php/7.2/mods-available/xdebug.ini
+sed -i 's/user = www-data/user = vagrant/g' /etc/php/8.1/fpm/pool.d/www.conf
+sed -i 's/group = www-data/group = vagrant/g' /etc/php/8.1/fpm/pool.d/www.conf
+sed -i 's/owner = www-data/owner = vagrant/g' /etc/php/8.1/fpm/pool.d/www.conf
+cat << EOF > /etc/php/8.1/mods-available/xdebug.ini
 zend_extension=xdebug.so
 xdebug.remote_enable=1
 xdebug.remote_connect_back=1
