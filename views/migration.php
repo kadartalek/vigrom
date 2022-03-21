@@ -16,14 +16,14 @@ if (!empty($namespace)) {
 use app\db\Migration;
 
 /**
- * Class <?= $className . "\n" ?>
+ * @Migration
  */
 class <?= $className ?> extends Migration
 {
     /**
      * {@inheritdoc}
      */
-    public function up()
+    public function safeUp()
     {
         echo "<?= $className ?> cannot be processed.\n";
 
@@ -33,7 +33,7 @@ class <?= $className ?> extends Migration
     /**
      * {@inheritdoc}
      */
-    public function down()
+    public function safeDown()
     {
         echo "<?= $className ?> cannot be reverted.\n";
 

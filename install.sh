@@ -9,7 +9,7 @@ password=$1
 
 add-apt-repository -y ppa:ondrej/php
 apt-get -y update
-apt-get install -y php8.1-fpm php8.1-cli php8.1-intl php8.1-curl php8.1-gd php8.1-mbstring php8.1-xml unzip nginx php-xdebug
+apt-get install -y php8.1-fpm php8.1-cli php8.1-intl php8.1-curl php8.1-gd php8.1-mbstring php8.1-xml php8.1-bcmath unzip nginx php-xdebug
 
 cat <<EOF >/etc/php/8.1/mods-available/xdebug.ini
 zend_extension=xdebug.so
@@ -27,13 +27,10 @@ wget --quiet -o - https://www.postgresql.org/media/keys/accc4cf8.asc | apt-key a
 apt-get -y update
 apt-get -y install postgresql-14
 
-sudo -iu postgres psql <<<"CREATE DATABASE \"yii2\" ENCODING 'UTF8' LC_COLLATE = 'RU_RU.UTF-8' LC_CTYPE = 'RU_RU.UTF-8'"
-sudo -iu postgres psql <<<"CREATE DATABASE \"yii2_test\" ENCODING 'UTF8' LC_COLLATE = 'RU_RU.UTF-8' LC_CTYPE = 'RU_RU.UTF-8'"
-
 sudo -iu postgres psql <<<"CREATE USER \"yii2_user\" WITH ENCRYPTED PASSWORD '$password'"
-sudo -iu postgres psql <<<"GRANT ALL PRIVILEGES ON DATABASE \"yii2\" TO \"yii2_user\""
 sudo -iu postgres psql <<<"CREATE USER \"yii2_user_test\" WITH ENCRYPTED PASSWORD '$password'"
-sudo -iu postgres psql <<<"GRANT ALL PRIVILEGES ON DATABASE \"yii2_test\" TO \"yii2_user\""
+
+sudo -iu postgres psql -a -f /app/databases.sql
 
 sudo -iu postgres psql -d yii2 -a -f /app/UUID_v7_for_Postgres.sql
 sudo -iu postgres psql -d yii2_test -a -f /app/UUID_v7_for_Postgres.sql
