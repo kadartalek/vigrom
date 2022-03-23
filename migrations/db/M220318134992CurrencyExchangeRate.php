@@ -21,7 +21,7 @@ class M220318134992CurrencyExchangeRate extends Migration
             'sell_id' => $this->uuid()->notNull(),
             'buy_id'  => $this->uuid()->notNull(),
             'rate'    => $this->money(10, 4)->notNull()->check('([[rate]] > 0)'),
-            'CHECK ([[sell_id]] <> [[buy_id]])'
+            'CHECK ([[sell_id]] <> [[buy_id]])',
         ]);
 
         $this->addPrimaryKey(self::TABLE . '__pk', self::TABLE, ['sell_id', 'buy_id']);

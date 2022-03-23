@@ -20,25 +20,28 @@ class M220318135005UserWallet extends Migration
         $this->createTable(self::TABLE, [
             'id'          => $this->uuid()->notNull()->pkMark(),
             'currency_id' => $this->uuid()->notNull(),
-            'value'       => $this->money(10, 2)->notNull(),
+            'value'       => $this->money(10, 2)->notNull()->defaultValue(0.0)->check('[[value]] >= 0.0'),
         ]);
 
         $this->addForeignKey(self::TABLE . '__fk01', self::TABLE, ['id'], 'user', ['id'], 'CASCADE', 'CASCADE');
-        $this->addForeignKey(self::TABLE . '__fk02', self::TABLE, ['buy_id'], 'currency', ['id'], 'RESTRICT', 'CASCADE');
+        $this->addForeignKey(self::TABLE . '__fk02', self::TABLE, ['currency_id'], 'currency', ['id'], 'RESTRICT', 'CASCADE');
 
         $r = (new Query())->select('id')->from('currency')->where(['a_3' => 'RUR'])->scalar();
         $d = (new Query())->select('id')->from('currency')->where(['a_3' => 'USD'])->scalar();
 
-        $this->batchInsert(self::TABLE, ['sell_id', 'buy_id', 'rate'], [
+        $ru = (new Query())->select('id')->from('user')->where(['login' => 'user_rub'])->scalar();
+        $du = (new Query())->select('id')->from('user')->where(['login' => 'user_usd'])->scalar();
+
+        $this->batchInsert(self::TABLE, ['id', 'currency_id', 'value'], [
             [
-                'sell_id' => $r,
-                'buy_id'  => $d,
-                'rate'    => '0.0093',
+                'id'          => $ru,
+                'currency_id' => $r,
+                'value'       => '0.0',
             ],
             [
-                'sell_id' => $d,
-                'buy_id'  => $r,
-                'rate'    => '103.02',
+                'id'          => $du,
+                'currency_id' => $d,
+                'value'       => '0.0',
             ],
         ]);
 

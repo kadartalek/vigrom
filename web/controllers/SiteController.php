@@ -51,7 +51,7 @@ class SiteController extends Controller
         return ['Hello'];
     }
 
-    public function actionAdd(): string
+    public function actionAdd(string $wallet, string $value, string $operation, string $reason): string
     {
         return bcadd('','');
     }

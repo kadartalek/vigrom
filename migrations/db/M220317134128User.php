@@ -22,8 +22,8 @@ class M220317134128User extends Migration
         ]);
 
         $this->createIndex(self::TABLE . '__ix01', self::TABLE, ['login']);
-        $this->insert(self::TABLE, ['login' => 'user_usd']);
         $this->insert(self::TABLE, ['login' => 'user_rub']);
+        $this->insert(self::TABLE, ['login' => 'user_usd']);
     }
 
     /**
